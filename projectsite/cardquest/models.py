@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -14,10 +13,10 @@ class Trainer(BaseModel):
     location = models.CharField(max_length=250, null=True, blank=True)
     email = models.EmailField(max_length=100, null=True, blank=True)
 
-    def str(self):
+    def __str__(self):
         return self.name
     
-class PokemonCards(BaseModel):
+class PokemonCard(BaseModel):
     RARITY_CHOICES = (
         ('Common', 'Common'),
         ('Uncommon', 'Uncommon'),
@@ -55,5 +54,7 @@ class PokemonCards(BaseModel):
     evolution_stage = models.CharField(max_length=100, null=True, blank=True)
     abilities = models.CharField(max_length=250, null=True, blank=True)
 
-    def str(self):
-        return self.name
+class Collection(BaseModel):
+    card = models.ForeignKey(PokemonCard, null=True, blank=True, on_delete=models.CASCADE)
+    trainer = models.ForeignKey(Trainer, null=True, blank=True, on_delete=models.CASCADE)
+    collection_date = models.DateField()
