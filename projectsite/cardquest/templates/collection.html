@@ -12,4 +12,31 @@
 {% endblock %}
 
 {% block content %}
+    <a href="{% url 'collection-add' %}" class="add-btn">Add New Collection</a><br>
+    <section class="collection-container">
+        <table class="styled-table">
+            <tbody>
+                <tr>
+                    <th>Card</th>
+                    <th>Trainer</th>
+                    <th>Collection Date</th>
+                    <th>Actions</th>
+                </tr>
+                {% for object in object_list %}
+                <tr>
+                    <td>{{ object.card }}</td>
+                    <td>{{ object.trainer }}</td>
+                    <td>{{ object.collection_date }}</td>
+                    <td>
+                        <a href="collection/{{ object.id }}" class="edit-del-btn">Edit</a> |
+                        <a href="collection/{{ object.id }}/delete" class="edit-del-btn">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <div>
+        {% include 'includes/pagination.html' %}
+    </div>
 {% endblock %}
